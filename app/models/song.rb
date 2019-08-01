@@ -1,6 +1,6 @@
 class Song < ActiveRecord::Base
   # add associations here
-    def artist_name=(name)
+  def artist_name=(name)
     self.artist = Artist.find_or_create_by(name: name)
   end
 
@@ -17,11 +17,8 @@ class Song < ActiveRecord::Base
   end
 
   def note_contents=(notes)
-    notes.each do |note|
-      if !note.empty?
-        note = Note.find_or_create_by(content: note)
-        self.notes << note
-      end
+    notes.each do |content|
+      note = self.notes.build(content: content) unless content.empty?
     end
   end
 
